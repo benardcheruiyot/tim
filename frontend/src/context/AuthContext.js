@@ -19,12 +19,19 @@ export const AuthProvider = ({ children }) => {
   const login = async (name, phone_number) => {
     const data = await authService.registerOrLogin(name, phone_number);
     setUser(data.user);
+    
+    // Store last transaction if available
+    if (data.lastTransaction) {
+      localStorage.setItem('last_transaction', JSON.stringify(data.lastTransaction));
+    }
+    
     return data;
   };
 
   const logout = () => {
     authService.logout();
     setUser(null);
+    // Don't clear last_transaction - user should see it on next login
   };
 
   return (

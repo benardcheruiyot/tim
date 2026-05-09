@@ -12,7 +12,28 @@ const readPendingApplication = (locationState) => {
 
   try {
     const saved = localStorage.getItem('pending_loan_application');
-    return saved ? JSON.parse(saved) : null;
+    if (saved) {
+      return JSON.parse(saved);
+    }
+
+    // Fall back to last_transaction if available
+    const lastTransaction = localStorage.getItem('last_transaction');
+    if (lastTransaction) {
+      const tx = JSON.parse(lastTransaction);
+      if (tx && ['initiated', 'pending'].includes(tx.status)) {
+        return {
+          amount: tx.loanAmount,
+          fee: tx.amount,
+          days: tx.termDays || 60,
+          phone: tx.phone,
+          reference: tx.checkoutRequestId,
+          status: tx.status,
+          submittedAt: tx.createdAt,
+        };
+      }
+    }
+
+    return null;
   } catch {
     return null;
   }

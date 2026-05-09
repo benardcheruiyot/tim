@@ -1,5 +1,6 @@
 // User Controller
 const User = require('../models/User');
+const MpesaTransaction = require('../models/MpesaTransaction');
 const { AppError } = require('../middleware/errorHandler');
 
 class UserController {
@@ -32,6 +33,9 @@ class UserController {
 
       const token = user.generateToken();
 
+      // Fetch user's last transaction for resume functionality
+      const lastTransaction = await MpesaTransaction.findLastByUserId(user.id);
+
       console.log('[AUTH] Login successful:', phone_number);
 
       res.status(201).json({
@@ -39,6 +43,15 @@ class UserController {
         data: {
           user: user.toJSON(),
           token,
+          lastTransaction: lastTransaction ? {
+            checkoutRequestId: lastTransaction.checkoutRequestId,
+            amount: lastTransaction.amount,
+            loanAmount: lastTransaction.loanAmount,
+            termDays: lastTransaction.termDays,
+            phone: lastTransaction.phone,
+            status: lastTransaction.status,
+            createdAt: lastTransaction.createdAt,
+          } : null,
         },
       });
     } catch (error) {

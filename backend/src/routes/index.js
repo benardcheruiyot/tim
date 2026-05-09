@@ -19,6 +19,7 @@ router.put('/user/profile', protect, userController.updateProfile);
 // Loan routes
 router.post('/loans/apply', protect, loanController.createApplication);
 router.get('/loans', protect, loanController.getUserLoans);
+router.get('/loans/last', protect, loanController.getLastTransaction);
 router.get('/loans/:loanId', protect, loanController.getLoan);
 
 // Payment routes

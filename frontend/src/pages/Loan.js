@@ -21,8 +21,31 @@ const formatLoanReceipt = (loan, checkoutReference, user) => ({
 
 const readPendingLoanApplication = () => {
   try {
-    const saved = localStorage.getItem('pending_loan_application');
-    return saved ? JSON.parse(saved) : null;
+    // First check for active pending application
+    const pendingApp = localStorage.getItem('pending_loan_application');
+    if (pendingApp) {
+      return JSON.parse(pendingApp);
+    }
+
+    // Otherwise check for last transaction (for resume after logout)
+    const lastTransaction = localStorage.getItem('last_transaction');
+    if (lastTransaction) {
+      const tx = JSON.parse(lastTransaction);
+      // Only show last transaction if it's still pending or in progress
+      if (tx && ['initiated', 'pending'].includes(tx.status)) {
+        return {
+          amount: tx.loanAmount,
+          fee: tx.amount,
+          days: tx.termDays || 60,
+          phone: tx.phone,
+          reference: tx.checkoutRequestId,
+          status: tx.status,
+          submittedAt: tx.createdAt,
+        };
+      }
+    }
+
+    return null;
   } catch {
     return null;
   }

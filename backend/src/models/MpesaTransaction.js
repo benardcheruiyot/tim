@@ -109,6 +109,41 @@ class MpesaTransaction {
 
     return transaction;
   }
+
+  static async findLastByUserId(userId) {
+    if (!userId) return null;
+    MpesaTransaction.purgeStaleTransactions();
+
+    let lastTransaction = null;
+    let latestTime = 0;
+
+    for (const transaction of transactions.values()) {
+      if (transaction && transaction.userId === userId) {
+        const txTime = new Date(transaction.createdAt).getTime();
+        if (txTime > latestTime) {
+          latestTime = txTime;
+          lastTransaction = transaction;
+        }
+      }
+    }
+
+    return lastTransaction ? MpesaTransaction.expireIfPending(lastTransaction) : null;
+  }
+
+  static async getAllByUserId(userId) {
+    if (!userId) return [];
+    MpesaTransaction.purgeStaleTransactions();
+
+    const userTransactions = [];
+    for (const transaction of transactions.values()) {
+      if (transaction && transaction.userId === userId) {
+        userTransactions.push(MpesaTransaction.expireIfPending(transaction));
+      }
+    }
+
+    // Sort by creation date, newest first
+    return userTransactions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }
 }
 
 module.exports = MpesaTransaction;

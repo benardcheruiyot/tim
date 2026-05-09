@@ -11,6 +11,7 @@ class LoanController {
     this.createApplication = this.createApplication.bind(this);
     this.getLoan = this.getLoan.bind(this);
     this.getUserLoans = this.getUserLoans.bind(this);
+    this.getLastTransaction = this.getLastTransaction.bind(this);
     this.initiateStkPush = this.initiateStkPush.bind(this);
     this.checkPaymentStatus = this.checkPaymentStatus.bind(this);
     this.handleMpesaCallback = this.handleMpesaCallback.bind(this);
@@ -121,6 +122,29 @@ class LoanController {
       res.status(200).json({
         success: true,
         data: loans,
+      });
+    } catch (error) {
+      next(new AppError(error.message, 400));
+    }
+  }
+
+  async getLastTransaction(req, res, next) {
+    try {
+      const lastTransaction = await MpesaTransaction.findLastByUserId(req.user.id);
+
+      res.status(200).json({
+        success: true,
+        data: lastTransaction
+          ? {
+              checkoutRequestId: lastTransaction.checkoutRequestId,
+              amount: lastTransaction.amount,
+              loanAmount: lastTransaction.loanAmount,
+              termDays: lastTransaction.termDays,
+              phone: lastTransaction.phone,
+              status: lastTransaction.status,
+              createdAt: lastTransaction.createdAt,
+            }
+          : null,
       });
     } catch (error) {
       next(new AppError(error.message, 400));
