@@ -606,14 +606,6 @@ const Loan = () => {
             </div>
           )}
 
-          <div className="loan-cta-note">
-            <strong>Why borrowers choose this offer:</strong>
-            <span>
-              You see the exact fee before paying, the amount options are easy to compare, and payment leads to a clear
-              processing page instead of bringing you back to the selection screen.
-            </span>
-          </div>
-
           <button
             ref={applyButtonRef}
             className="btn-primary apply-now-btn"
