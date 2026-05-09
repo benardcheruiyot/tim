@@ -1,11 +1,17 @@
 /* Footer Styles */
 .footer {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0 1rem 1rem;
+}
+
+.footer-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
   background-color: var(--primary-dark);
   color: white;
   padding: 1.5rem;
   text-align: center;
-  margin-top: 2rem;
-  width: 100%;
   border-radius: var(--radius);
 }
 
@@ -27,13 +33,17 @@
   color: white;
 }
 
-.footer p {
+.footer-inner p {
   font-size: 0.8rem;
   opacity: 0.8;
 }
 
 @media (max-width: 480px) {
   .footer {
+    padding: 0 0.75rem 0.75rem;
+  }
+
+  .footer-inner {
     padding: 1.15rem 1rem;
   }
 

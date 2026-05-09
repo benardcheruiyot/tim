@@ -473,7 +473,7 @@ const Loan = () => {
   };
 
   return (
-    <div className="container apply-page-wrap">
+    <div className="container container-wide apply-page-wrap">
       <Header logoInitial="P" />
 
       <div className="apply-container">

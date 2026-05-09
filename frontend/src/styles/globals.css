@@ -18,6 +18,7 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --radius: 12px;
   --transition: all 0.3s ease;
+  --content-max: 1120px;
 }
 
 html,
@@ -61,10 +62,15 @@ select {
 /* Utility Classes */
 .container {
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   margin: 0 auto;
   padding: 1.5rem;
   flex: 1;
+}
+
+.container-wide {
+  max-width: none;
+  padding: 0;
 }
 
 .btn-primary {
@@ -191,7 +197,7 @@ select {
 
 @media (min-width: 768px) {
   .container {
-    max-width: 520px;
+    max-width: 560px;
   }
 
   .card {
