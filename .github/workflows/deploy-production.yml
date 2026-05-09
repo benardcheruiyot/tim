@@ -63,6 +63,10 @@ jobs:
             BACKEND_DIR="$APP_ROOT/backend"
             APP_NAME="${PM2_APP_NAME:-extracash-backend}"
 
+            cat > "$BACKEND_DIR/.env" <<'EOF'
+            ${{ secrets.BACKEND_ENV }}
+            EOF
+
             cd "$BACKEND_DIR"
             npm ci --omit=dev
 
@@ -73,3 +77,10 @@ jobs:
             fi
 
             pm2 save
+
+            if ! curl -fsS http://127.0.0.1:5000/api/health >/dev/null; then
+              echo "Backend health check failed after deployment"
+              pm2 status
+              pm2 logs "$APP_NAME" --lines 80 --nostream || true
+              exit 1
+            fi
