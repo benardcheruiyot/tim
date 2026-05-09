@@ -145,6 +145,13 @@ const Loan = () => {
     { amount: 150000, fee: 3500, days: 60 },
   ]);
 
+  const loanTrustStats = [
+    { value: '3 columns', label: 'clear options' },
+    { value: 'Ksh 120', label: 'starting fee' },
+    { value: 'Ksh 150k', label: 'top amount' },
+    { value: 'Secure', label: 'M-Pesa flow' },
+  ];
+
   useEffect(() => {
     if (!user?.phone_number) {
       navigate('/eligibility');
@@ -510,6 +517,15 @@ const Loan = () => {
             <strong> M-Pesa records</strong>. Select one amount to continue.
           </div>
 
+          <div className="loan-trust-strip" aria-label="Loan benefits">
+            {loanTrustStats.map((stat) => (
+              <div className="loan-trust-stat" key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+
           <div className="recent-loans-box">
             <div className="recent-loans-heading">
               <h3>Recent successful borrowers</h3>
@@ -532,10 +548,13 @@ const Loan = () => {
                   className={`loan-option ${selectedLoan?.amount === loan.amount ? 'selected' : ''}`}
                   onClick={() => handleSelectLoan(loan)}
                 >
+                  {loan.amount === 50000 && <div className="loan-option-tag popular">Popular</div>}
+                  {loan.amount === 150000 && <div className="loan-option-tag top-tier">Top tier</div>}
+                  {loan.amount === 5500 && <div className="loan-option-tag starter">Starter</div>}
                   {selectedLoan?.amount === loan.amount && <div className="loan-option-badge">Selected</div>}
                   <div className="loan-amount">Ksh {loan.amount.toLocaleString()}</div>
                   <div className="processing-fee">Fee: Ksh {loan.fee.toLocaleString()}</div>
-                  <div className="loan-net-amount">You get Ksh {(loan.amount - loan.fee).toLocaleString()}</div>
+                  <div className="loan-net-amount">Net deposit: Ksh {(loan.amount - loan.fee).toLocaleString()}</div>
                 </div>
               ))}
             </div>
@@ -564,6 +583,14 @@ const Loan = () => {
               </div>
             </div>
           )}
+
+          <div className="loan-cta-note">
+            <strong>Why borrowers choose this offer:</strong>
+            <span>
+              You see the exact fee before paying, the amount options are easy to compare, and payment leads to a clear
+              processing page instead of bringing you back to the selection screen.
+            </span>
+          </div>
 
           <button
             ref={applyButtonRef}
