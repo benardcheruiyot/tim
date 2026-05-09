@@ -228,6 +228,30 @@
   color: var(--primary);
 }
 
+.loan-card-timer {
+  padding-top: 1rem;
+  padding-bottom: 0;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+.live-timer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.timer-label {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.timer-value {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 @media (max-width: 500px) {
   .welcome-header,
   .loans-header {

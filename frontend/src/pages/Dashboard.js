@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LiveTimer from '../components/LiveTimer';
 import { useAuth } from '../hooks/useAuth';
 import { loanService } from '../services/api';
 import { formatCurrency, formatPhoneNumber, calculateRepayment } from '../utils/helpers';
@@ -140,6 +141,13 @@ const Dashboard = () => {
                         </strong>
                       </div>
                     )}
+                  </div>
+
+                  <div className="loan-card-timer">
+                    <LiveTimer 
+                      startTime={loan.createdAt} 
+                      label="Application submitted" 
+                    />
                   </div>
 
                   <div className="loan-card-footer">
