@@ -477,7 +477,7 @@ class MpesaService {
             Authorization: `Bearer ${accessToken}`,
           },
           body: payload,
-          timeout: 30000, // Increase timeout for status queries
+          timeout: 8000,
         }
       );
 

@@ -319,10 +319,14 @@ const Loan = () => {
 
       let attempts = 0;
       let checkoutReference = result.reference;
-      const pollIntervalMs = 2000;
-      const maxAttempts = 45;
-      paymentPollRef.current = setInterval(async () => {
-        attempts++;
+      const pollIntervalMs = 1200;
+      const maxAttempts = 75;
+      const scheduleNextPoll = (delay = pollIntervalMs) => {
+        paymentPollRef.current = setTimeout(runPoll, delay);
+      };
+
+      const runPoll = async () => {
+        attempts += 1;
 
         if (Swal.isVisible()) {
           const remainingSeconds = Math.max(0, Math.ceil(((maxAttempts - attempts) * pollIntervalMs) / 1000));
@@ -345,7 +349,7 @@ const Loan = () => {
           );
 
           if (statusResult.success) {
-            clearInterval(paymentPollRef.current);
+            clearTimeout(paymentPollRef.current);
 
             const applicationPayload = formatLoanReceipt(selectedLoan, checkoutReference, user);
             localStorage.setItem('pending_loan_application', JSON.stringify(applicationPayload));
@@ -370,6 +374,8 @@ const Loan = () => {
                 state: applicationPayload,
               });
             });
+
+            return;
           } else if (
             statusResult.status === 'failed' ||
             statusResult.status === 'cancelled' ||
@@ -414,7 +420,7 @@ const Loan = () => {
               }
             }
 
-            clearInterval(paymentPollRef.current);
+            clearTimeout(paymentPollRef.current);
             Swal.fire({
               icon: 'warning',
               title: 'Loan Not Processed',
@@ -422,8 +428,9 @@ const Loan = () => {
               confirmButtonColor: '#26c2a3',
             });
             if (isMountedRef.current) setLoading(false);
+            return;
           } else if (attempts >= maxAttempts) {
-            clearInterval(paymentPollRef.current);
+            clearTimeout(paymentPollRef.current);
 
             try {
               const finalStatusResult = await loanService.checkPaymentStatus(checkoutReference);
@@ -466,6 +473,7 @@ const Loan = () => {
               }
             );
             if (isMountedRef.current) setLoading(false);
+            return;
           }
         } catch (error) {
           console.warn('Status check attempt failed:', error);
@@ -473,7 +481,7 @@ const Loan = () => {
           // Do not fail immediately on transient API/network errors.
           // Continue polling until timeout to allow callback/query recovery.
           if (attempts >= maxAttempts) {
-            clearInterval(paymentPollRef.current);
+            clearTimeout(paymentPollRef.current);
             Swal.fire({
               icon: 'info',
               title: 'Confirmation Delayed',
@@ -481,9 +489,17 @@ const Loan = () => {
               confirmButtonColor: '#26c2a3',
             });
             if (isMountedRef.current) setLoading(false);
+            return;
           }
         }
-      }, pollIntervalMs);
+
+        if (isMountedRef.current) {
+          scheduleNextPoll();
+        }
+      };
+
+      // Start quickly, then continue with sequential polling.
+      scheduleNextPoll(500);
     } catch (error) {
       Swal.fire({
         icon: 'error',
