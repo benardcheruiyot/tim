@@ -115,14 +115,14 @@
 }
 
 .loan-processing-step {
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr);
-  gap: 0.85rem;
-  align-items: start;
   padding: 1rem;
   border-radius: 18px;
   background: #fff;
   border: 1px solid #e2e8f0;
+}
+
+.loan-processing-step.expanded {
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
 }
 
 .loan-processing-step.done {
@@ -133,6 +133,30 @@
 .loan-processing-step.active {
   border-color: rgba(15, 118, 110, 0.24);
   background: linear-gradient(180deg, rgba(38, 194, 163, 0.08), #fff);
+}
+
+.loan-processing-step.pending {
+  border-color: rgba(148, 163, 184, 0.36);
+}
+
+.loan-processing-step-toggle {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.loan-processing-step-head {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: center;
 }
 
 .loan-processing-step-index {
@@ -146,10 +170,45 @@
   font-weight: 800;
 }
 
+.loan-processing-step.done .loan-processing-step-index {
+  background: linear-gradient(135deg, #0f766e, #22c55e);
+}
+
+.loan-processing-step-label {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.loan-processing-step-arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.22s ease;
+}
+
+.loan-processing-step-arrow.open {
+  transform: rotate(180deg);
+}
+
 .loan-processing-step h2 {
   margin: 0 0 0.35rem;
   color: #0f172a;
   font-size: 1rem;
+}
+
+.loan-processing-step-content {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #dbe3ec;
 }
 
 .loan-processing-step p {
@@ -252,8 +311,11 @@
   }
 
   .loan-processing-step {
-    grid-template-columns: 36px minmax(0, 1fr);
     padding: 0.85rem;
+  }
+
+  .loan-processing-step-head {
+    grid-template-columns: 36px minmax(0, 1fr);
   }
 
   .loan-processing-step-index {

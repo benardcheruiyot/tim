@@ -22,6 +22,7 @@ const LoanProcessing = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [application, setApplication] = useState(() => readPendingApplication(location.state));
+  const [openStep, setOpenStep] = useState(1);
 
   useEffect(() => {
     document.title = 'Loan Processing | Tala Mkopo Extra';
@@ -46,6 +47,29 @@ const LoanProcessing = () => {
   }
 
   const netDeposit = Math.max(Number(application.amount || 0) - Number(application.fee || 0), 0);
+  const timelineSteps = [
+    {
+      id: 1,
+      title: 'Payment received',
+      description: 'We have confirmed the fee payment from your phone number.',
+      status: 'done',
+      label: 'Completed',
+    },
+    {
+      id: 2,
+      title: 'Application in review',
+      description: 'Your selected loan amount is being verified. This usually finishes within a short review window.',
+      status: 'active',
+      label: 'In progress',
+    },
+    {
+      id: 3,
+      title: 'Disbursement',
+      description: 'Once approved, the funds will be sent to your M-Pesa account.',
+      status: 'pending',
+      label: 'Next step',
+    },
+  ];
 
   return (
     <div className="loan-processing-page">
@@ -85,29 +109,38 @@ const LoanProcessing = () => {
         </section>
 
         <section className="loan-processing-timeline">
-          <div className="loan-processing-step done">
-            <div className="loan-processing-step-index">1</div>
-            <div>
-              <h2>Payment received</h2>
-              <p>We have confirmed the fee payment from your phone number.</p>
-            </div>
-          </div>
-          <div className="loan-processing-step active">
-            <div className="loan-processing-step-index">2</div>
-            <div>
-              <h2>Application in review</h2>
-              <p>
-                Your selected loan amount is being verified. This usually finishes within a short review window.
-              </p>
-            </div>
-          </div>
-          <div className="loan-processing-step">
-            <div className="loan-processing-step-index">3</div>
-            <div>
-              <h2>Disbursement</h2>
-              <p>Once approved, the funds will be sent to your M-Pesa account.</p>
-            </div>
-          </div>
+          {timelineSteps.map((step) => {
+            const isExpanded = openStep === step.id;
+
+            return (
+              <article
+                key={step.id}
+                className={`loan-processing-step ${step.status} ${isExpanded ? 'expanded' : ''}`.trim()}
+              >
+                <button
+                  type="button"
+                  className="loan-processing-step-toggle"
+                  aria-expanded={isExpanded}
+                  onClick={() => setOpenStep(isExpanded ? 0 : step.id)}
+                >
+                  <div className="loan-processing-step-head">
+                    <div className="loan-processing-step-index">{step.status === 'done' ? '✓' : step.id}</div>
+                    <div>
+                      <h2>{step.title}</h2>
+                      <span className="loan-processing-step-label">{step.label}</span>
+                    </div>
+                  </div>
+                  <span className={`loan-processing-step-arrow ${isExpanded ? 'open' : ''}`}>⌄</span>
+                </button>
+
+                {isExpanded && (
+                  <div className="loan-processing-step-content">
+                    <p>{step.description}</p>
+                  </div>
+                )}
+              </article>
+            );
+          })}
         </section>
 
         <section className="loan-processing-note">
