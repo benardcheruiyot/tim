@@ -91,9 +91,18 @@ const server = app.listen(PORT, () => {
   pushService.configure();
   console.log('🔔 Web Push configured');
 
+  // Send an early reminder after startup, then continue hourly.
+  setTimeout(() => {
+    pushService.broadcastHourlyReminder().catch((error) => {
+      console.warn('[Push Scheduler] Immediate reminder failed:', error.message);
+    });
+  }, 2 * 60 * 1000);
+
   // Hourly push notification scheduler
   setInterval(() => {
-    pushService.broadcastHourlyReminder();
+    pushService.broadcastHourlyReminder().catch((error) => {
+      console.warn('[Push Scheduler] Hourly reminder failed:', error.message);
+    });
   }, 60 * 60 * 1000); // every 60 minutes
 });
 
