@@ -6,6 +6,8 @@ const mpesaService = require('../services/mpesaService');
 const { AppError } = require('../middleware/errorHandler');
 const pushService = require('../services/pushService');
 
+const STATUS_QUERY_MIN_INTERVAL_MS = 3500;
+
 class LoanController {
   constructor() {
     this.createApplication = this.createApplication.bind(this);
@@ -245,6 +247,25 @@ class LoanController {
         });
       }
 
+      // Return quickly for active transactions and only query Safaricom at controlled intervals.
+      // This keeps UI polling responsive while still allowing callback-confirmed states to surface instantly.
+      if (existingTransaction && !terminalStatuses.includes(existingTransaction.status)) {
+        const lastQueryMs = existingTransaction.lastStatusQueryAt
+          ? new Date(existingTransaction.lastStatusQueryAt).getTime()
+          : 0;
+        const elapsedSinceLastQuery = Date.now() - lastQueryMs;
+
+        if (lastQueryMs > 0 && elapsedSinceLastQuery < STATUS_QUERY_MIN_INTERVAL_MS) {
+          return res.status(200).json({
+            success: false,
+            status: existingTransaction.status || 'pending',
+            resultCode: existingTransaction.resultCode || null,
+            resultDescription: existingTransaction.resultDescription || 'Waiting for payment confirmation...',
+            loanId: existingTransaction.loanId || null,
+          });
+        }
+      }
+
       console.log('[Payment Status] Querying M-Pesa API for transaction status...');
       const result = await mpesaService.checkTransactionStatus(checkoutId);
       console.log('[Payment Status] M-Pesa query result:', result.status);
@@ -262,6 +283,7 @@ class LoanController {
           status: normalizedStatus,
           resultCode: result.resultCode || null,
           resultDescription: result.resultDescription || null,
+          lastStatusQueryAt: new Date(),
         });
       } else if (normalizedStatus === 'completed') {
         // If we confirmed payment is completed but no transaction exists, create one

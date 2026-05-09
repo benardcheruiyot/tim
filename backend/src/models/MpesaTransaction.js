@@ -22,6 +22,7 @@ class MpesaTransaction {
     this.loanCreatedAt = data.loanCreatedAt || null;
     this.rawRequest = data.rawRequest || null;
     this.rawResponse = data.rawResponse || null;
+    this.lastStatusQueryAt = data.lastStatusQueryAt || null;
     this.createdAt = new Date();
     this.updatedAt = new Date();
     this.completedAt = null;
