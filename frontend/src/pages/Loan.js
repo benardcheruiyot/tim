@@ -121,18 +121,18 @@ const Loan = () => {
   ];
 
   const [loanOptions] = useState([
-    { amount: 5500, fee: 100, days: 60 },
-    { amount: 7800, fee: 130, days: 60 },
-    { amount: 9800, fee: 160, days: 60 },
-    { amount: 11200, fee: 200, days: 60 },
-    { amount: 16800, fee: 230, days: 60 },
-    { amount: 21200, fee: 270, days: 60 },
-    { amount: 25600, fee: 400, days: 60 },
-    { amount: 30000, fee: 470, days: 60 },
-    { amount: 35400, fee: 590, days: 60 },
-    { amount: 39800, fee: 730, days: 60 },
-    { amount: 44200, fee: 1010, days: 60 },
-    { amount: 48600, fee: 1600, days: 60 },
+    { amount: 5500, fee: 120, days: 60 },
+    { amount: 10000, fee: 200, days: 60 },
+    { amount: 15000, fee: 320, days: 60 },
+    { amount: 25000, fee: 520, days: 60 },
+    { amount: 35000, fee: 760, days: 60 },
+    { amount: 50000, fee: 1100, days: 60 },
+    { amount: 65000, fee: 1450, days: 60 },
+    { amount: 80000, fee: 1850, days: 60 },
+    { amount: 100000, fee: 2350, days: 60 },
+    { amount: 120000, fee: 2800, days: 60 },
+    { amount: 135000, fee: 3200, days: 60 },
+    { amount: 150000, fee: 3500, days: 60 },
   ]);
 
   useEffect(() => {

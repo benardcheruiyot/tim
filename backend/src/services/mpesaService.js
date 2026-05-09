@@ -331,6 +331,30 @@ class MpesaService {
 
       const callbackUrl = String(process.env.MPESA_CALLBACK_URL || '').trim();
 
+      if (!callbackUrl) {
+        throw new Error('MPESA_CALLBACK_URL is required in production.');
+      }
+
+      if (this.environment === 'production') {
+        let callbackHost;
+        let callbackProtocol;
+        try {
+          const parsedCallbackUrl = new URL(callbackUrl);
+          callbackHost = parsedCallbackUrl.hostname;
+          callbackProtocol = parsedCallbackUrl.protocol;
+        } catch {
+          throw new Error('MPESA_CALLBACK_URL must be a valid HTTPS URL in production.');
+        }
+
+        if (
+          callbackProtocol !== 'https:' ||
+          callbackHost === 'localhost' ||
+          callbackHost === '127.0.0.1'
+        ) {
+          throw new Error('MPESA_CALLBACK_URL must be HTTPS and publicly reachable in production.');
+        }
+      }
+
       const activeTransactionType = this.getActiveTransactionType();
       const activeBusinessCode = this.resolveBusinessShortCode(activeTransactionType);
       const activePartyB = this.resolvePartyB(activeTransactionType);

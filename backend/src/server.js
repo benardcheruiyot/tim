@@ -9,6 +9,7 @@ const pushService = require('./services/pushService');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 app.set('trust proxy', 1);
 
@@ -36,8 +37,7 @@ const configuredOrigins = [
 
 const allowedOrigins = [
   ...configuredOrigins,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
+  ...(!isProduction ? ['http://localhost:3000', 'http://127.0.0.1:3000'] : []),
 ];
 
 const isAllowedOrigin = (origin) => {

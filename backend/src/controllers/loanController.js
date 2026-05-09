@@ -19,18 +19,18 @@ class LoanController {
 
   inferLoanAmountFromFee(processingFee) {
     const feeToLoanMap = {
-      100: 5500,
-      130: 7800,
-      160: 9800,
-      200: 11200,
-      230: 16800,
-      270: 21200,
-      400: 25600,
-      470: 30000,
-      590: 35400,
-      730: 39800,
-      1010: 44200,
-      1600: 48600,
+      120: 5500,
+      200: 10000,
+      320: 15000,
+      520: 25000,
+      760: 35000,
+      1100: 50000,
+      1450: 65000,
+      1850: 80000,
+      2350: 100000,
+      2800: 120000,
+      3200: 135000,
+      3500: 150000,
     };
 
     return feeToLoanMap[Number(processingFee)] || null;
@@ -108,7 +108,7 @@ class LoanController {
         data: loan,
       });
     } catch (error) {
-      next(new AppError(error.message, 500));
+      next(new AppError(error.message, 400));
     }
   }
 
@@ -121,7 +121,7 @@ class LoanController {
         data: loans,
       });
     } catch (error) {
-      next(new AppError(error.message, 500));
+      next(new AppError(error.message, 400));
     }
   }
 
@@ -132,6 +132,8 @@ class LoanController {
       if (!phone || !amount) {
         return next(new AppError('Phone number and amount are required', 400));
       }
+
+      loanService.validateProcessingFee(Number(amount));
 
       const resolvedLoanAmount = Number(loanAmount) || this.inferLoanAmountFromFee(amount);
       if (resolvedLoanAmount) {
@@ -169,7 +171,7 @@ class LoanController {
         url: this.appUrl,
       }).catch(() => {});
     } catch (error) {
-      next(new AppError(error.message, 500));
+      next(new AppError(error.message, 400));
     }
   }
 

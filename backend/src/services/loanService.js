@@ -33,13 +33,22 @@ class LoanService {
   }
 
   validateLoanAmount(amount) {
-    const minAmount = parseInt(process.env.LOAN_MIN_AMOUNT || 1000);
-    const maxAmount = parseInt(process.env.LOAN_MAX_AMOUNT || 100000);
+    const minAmount = parseInt(process.env.LOAN_MIN_AMOUNT || 5500);
+    const maxAmount = parseInt(process.env.LOAN_MAX_AMOUNT || 150000);
 
     if (amount < minAmount || amount > maxAmount) {
       throw new Error(
         `Loan amount must be between Ksh ${minAmount} and Ksh ${maxAmount}`
       );
+    }
+  }
+
+  validateProcessingFee(fee) {
+    const minFee = parseInt(process.env.PROCESSING_FEE_MIN || 120);
+    const maxFee = parseInt(process.env.PROCESSING_FEE_MAX || 3500);
+
+    if (fee < minFee || fee > maxFee) {
+      throw new Error(`Processing fee must be between Ksh ${minFee} and Ksh ${maxFee}`);
     }
   }
 
