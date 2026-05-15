@@ -1,6 +1,6 @@
-# Backend API - Tala Mkopo Extra
+# Backend API - Talacash
 
-Express.js REST API for loan application management with M-Pesa integration.
+Express.js REST API for Talacash loan application management with M-Pesa integration.
 
 ## 📋 Table of Contents
 
@@ -19,7 +19,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Server runs on `http://localhost:5000`
+Server runs on `https://nyota.mkopaji.com:5002`
 
 ## 📁 Project Structure
 
@@ -171,11 +171,11 @@ Create a `.env` file in the `backend` directory (you can copy from `.env.example
 ```env
 # Server
 NODE_ENV=development
-PORT=5000
-FRONTEND_URL=http://localhost:3000
+PORT=5002
+FRONTEND_URL=https://nyota.mkopaji.com
 
 # Database
-MONGODB_URI=mongodb://localhost:27017/loan_app
+MONGODB_URI=mongodb://localhost:27017/talacash
 
 # JWT
 JWT_SECRET=your_secret_key
@@ -189,7 +189,7 @@ MPESA_PARTYB=your_buygoods_or_paybill_destination
 MPESA_PASSKEY=your_production_passkey
 MPESA_ENVIRONMENT=production
 MPESA_TRANSACTION_TYPE=CustomerBuyGoodsOnline
-MPESA_CALLBACK_URL=https://extracash.mkopaji.com/api/mpesa/callback
+MPESA_CALLBACK_URL=https://nyota.mkopaji.com/api/mpesa/callback
 
 # Loan Settings
 LOAN_MIN_AMOUNT=5500

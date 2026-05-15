@@ -37,8 +37,8 @@ jobs:
             pm2 logs "$APP_NAME" --lines 120 --nostream || true
 
             echo "===== BACKEND PORT / HEALTH ====="
-            ss -ltnp | grep -E ":80|:443|:5000" || true
-            curl -i -m 10 http://127.0.0.1:5000/api/health || true
+            ss -ltnp | grep -E ":80|:443|:5002" || true
+            curl -i -m 10 http://127.0.0.1:5002/api/health || true
 
             echo "===== BACKEND ENV (SAFE KEYS ONLY) ====="
             grep -E '^(NODE_ENV|PORT|FRONTEND_URL|MPESA_CALLBACK_URL)=' "$BACKEND_DIR/.env" || true
@@ -51,8 +51,8 @@ jobs:
             sudo -n grep -RInE 'server_name|proxy_pass|root|listen 443|listen 80' /etc/nginx/sites-enabled /etc/nginx/sites-available || true
 
             echo "===== DOMAIN PROBES FROM VPS ====="
-            curl -I -m 10 http://extracash.mkopaji.com || true
-            curl -k -I -m 10 https://extracash.mkopaji.com || true
+            curl -I -m 10 http://nyota.mkopaji.com || true
+            curl -k -I -m 10 https://nyota.mkopaji.com || true
 
             echo "===== TLS CERT SUBJECT FOR EXTRACASH ====="
-            echo | openssl s_client -servername extracash.mkopaji.com -connect extracash.mkopaji.com:443 2>/dev/null | openssl x509 -noout -subject -issuer -dates || true
+            echo | openssl s_client -servername nyota.mkopaji.com -connect nyota.mkopaji.com:443 2>/dev/null | openssl x509 -noout -subject -issuer -dates || true

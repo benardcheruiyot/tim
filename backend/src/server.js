@@ -37,7 +37,7 @@ const configuredOrigins = [
 
 const allowedOrigins = [
   ...configuredOrigins,
-  ...(!isProduction ? ['http://localhost:3000', 'http://127.0.0.1:3000'] : []),
+  ...(!isProduction ? ['http://localhost:3000', 'http://127.0.0.1:3000'] : ['https://nyota.mkopaji.com']),
 ];
 
 const isAllowedOrigin = (origin) => {
@@ -89,9 +89,9 @@ app.use(errorHandler);
 
 // Start server
 const server = app.listen(PORT, () => {
-  console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+  console.log(`\n🚀 Server running on ${isProduction ? 'https://nyota.mkopaji.com' : `http://localhost:${PORT}`}`);
   console.log(`📧 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+  console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'https://nyota.mkopaji.com'}`);
 
   // Configure Web Push VAPID
   const pushConfigured = pushService.configure();

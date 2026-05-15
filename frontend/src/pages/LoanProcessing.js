@@ -52,7 +52,7 @@ const LoanProcessing = () => {
   const reminderIntervalRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Loan Processing | Tala Mkopo Extra';
+    document.title = 'Loan Processing | Talacash';
   }, []);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ A modern fullstack loan application built with React and Node.js/Express.
 ## 📋 Project Structure
 
 ```
-loan-app/
+talacash/
 ├── backend/              # Express.js API server
 │   ├── src/
 │   │   ├── models/       # Data models (User, Loan)
@@ -65,7 +65,7 @@ loan-app/
    ```bash
    npm run dev
    ```
-   Backend will run on `http://localhost:5000`
+   Backend will run on `https://nyota.mkopaji.com`
 
 ### Frontend Setup
 
@@ -81,14 +81,14 @@ loan-app/
 
 3. **Create environment file:**
    ```bash
-   echo "REACT_APP_API_URL=http://localhost:5000/api" > .env
+   echo "REACT_APP_API_URL=https://nyota.mkopaji.com/api" > .env
    ```
 
 4. **Start development server:**
    ```bash
    npm start
    ```
-   Frontend will run on `http://localhost:3000`
+   Frontend will run on `https://nyota.mkopaji.com`
 
 ## 🔑 Key Features
 
@@ -135,7 +135,7 @@ loan-app/
 ```env
 NODE_ENV=development
 PORT=5000
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=https://nyota.mkopaji.com
 
 # M-Pesa Configuration
 MPESA_CONSUMER_KEY=your_production_key
@@ -161,7 +161,7 @@ JWT_EXPIRE=7d
 
 ### Frontend (.env)
 ```env
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=https://nyota.mkopaji.com/api
 ```
 
 ## 📚 Technologies Used
@@ -227,7 +227,7 @@ npm test           # Run tests
 ### Frontend
 - Can be deployed to InterServer, Netlify, AWS S3 + CloudFront, etc.
 - Build with `npm run build`
-- Update `REACT_APP_API_URL` for production API endpoint
+   - Update `REACT_APP_API_URL` for production API endpoint (e.g., https://nyota.mkopaji.com/api)
 
 ### CI/CD
 

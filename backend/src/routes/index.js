@@ -7,7 +7,7 @@ const pushService = require('../services/pushService');
 
 const router = express.Router();
 const appName = process.env.APP_NAME || 'Loan App';
-const appUrl = process.env.APP_PUBLIC_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+const appUrl = process.env.APP_PUBLIC_URL || process.env.FRONTEND_URL || 'https://nyota.mkopaji.com';
 
 // Public routes
 router.post('/auth/register', userController.registerOrLogin);

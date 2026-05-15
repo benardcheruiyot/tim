@@ -1,8 +1,8 @@
 {
-  "name": "loan-app-frontend",
+  "name": "talacash-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://nyota.mkopaji.com:5002",
   "homepage": "./",
   "dependencies": {
     "react": "^18.2.0",

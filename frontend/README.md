@@ -1,6 +1,6 @@
-# Frontend - Tala Mkopo Extra
+# Frontend - Talacash
 
-React-based frontend application for loan management and application.
+React-based frontend application for Talacash loan management and application.
 
 ## 📋 Table of Contents
 

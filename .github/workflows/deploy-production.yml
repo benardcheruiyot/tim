@@ -19,7 +19,7 @@ jobs:
       NODE_VERSION: 20
       PM2_APP_NAME: ${{ vars.PM2_APP_NAME }}
       BACKEND_PORT: 5001
-      APP_DOMAIN: extracash.mkopaji.com
+      APP_DOMAIN: nyota.mkopaji.com
 
     steps:
       - name: Checkout
@@ -70,7 +70,7 @@ jobs:
             ${{ secrets.BACKEND_ENV }}
             EOF
 
-            # Avoid clashes with other apps already using port 5000 on shared VPS.
+            # Avoid clashes with other apps already using port 5002 on shared VPS.
             sed -i '/^PORT=/d' "$BACKEND_DIR/.env"
             echo "PORT=$PORT" >> "$BACKEND_DIR/.env"
 
@@ -112,7 +112,7 @@ jobs:
             set -e
 
             APP_ROOT="${{ secrets.DEPLOY_PATH }}"
-            DOMAIN="${APP_DOMAIN:-extracash.mkopaji.com}"
+            DOMAIN="${APP_DOMAIN:-nyota.mkopaji.com}"
             PORT="${BACKEND_PORT:-5001}"
             FRONTEND_BUILD="$APP_ROOT/frontend/build"
             NGINX_CONF="/etc/nginx/sites-available/$DOMAIN.conf"

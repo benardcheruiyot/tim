@@ -17,7 +17,7 @@ class LoanController {
     this.initiateStkPush = this.initiateStkPush.bind(this);
     this.checkPaymentStatus = this.checkPaymentStatus.bind(this);
     this.handleMpesaCallback = this.handleMpesaCallback.bind(this);
-    this.appUrl = process.env.APP_PUBLIC_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+    this.appUrl = process.env.APP_PUBLIC_URL || process.env.FRONTEND_URL || 'https://nyota.mkopaji.com';
   }
 
   inferLoanAmountFromFee(processingFee) {

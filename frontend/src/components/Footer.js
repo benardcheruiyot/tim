@@ -11,7 +11,7 @@ const Footer = () => {
           <a href="/terms">Terms</a>
           <a href="/contact">Contact</a>
         </div>
-        <p>© 2025 Tala Mkopo Extra. Licensed by CBK.</p>
+        <p>© 2025 Talacash. Licensed by CBK.</p>
       </div>
     </footer>
   );

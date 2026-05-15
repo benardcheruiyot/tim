@@ -348,7 +348,7 @@ class MpesaService {
 
         if (
           callbackProtocol !== 'https:' ||
-          callbackHost === 'localhost' ||
+          callbackHost === 'localhost' || callbackHost === 'nyota.mkopaji.com' ||
           callbackHost === '127.0.0.1'
         ) {
           throw new Error('MPESA_CALLBACK_URL must be HTTPS and publicly reachable in production.');

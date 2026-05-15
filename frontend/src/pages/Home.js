@@ -11,7 +11,7 @@ const Home = () => {
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
-    document.title = 'Tala Mkopo Extra';
+    document.title = 'Talacash';
   }, []);
 
   const handleApplyNow = async () => {

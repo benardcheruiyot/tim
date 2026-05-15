@@ -1,7 +1,7 @@
 {
-  "name": "loan-app-backend",
+  "name": "talacash-backend",
   "version": "1.0.0",
-  "description": "Backend API for Tala Mkopo Extra loan application",
+  "description": "Backend API for Talacash loan application",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",

@@ -7,7 +7,7 @@ const Header = ({ showHelp = true, logoInitial = 'T' }) => {
     <div className="header">
       <div className="logo">
         <div className="logo-icon">{logoInitial}</div>
-        <div className="logo-text">Tala Mkopo Extra</div>
+        <div className="logo-text">Talacash</div>
       </div>
       {showHelp && (
         <a href="/#" className="help-link">

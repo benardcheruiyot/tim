@@ -192,7 +192,7 @@ const Loan = () => {
   }, [user, navigate]);
 
   useEffect(() => {
-    document.title = 'Loan Options | Tala Mkopo Extra';
+    document.title = 'Loan Options | Talacash';
   }, []);
 
   useEffect(() => {

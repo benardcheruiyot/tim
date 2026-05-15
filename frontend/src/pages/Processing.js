@@ -24,7 +24,7 @@ const Processing = () => {
   const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
-    document.title = 'Processing Eligibility | Tala Mkopo Extra';
+    document.title = 'Processing Eligibility | Talacash';
   }, []);
 
   useEffect(() => {
